@@ -17,6 +17,8 @@ public class Server {
     DataOutput out;
     ServerSocket serverSocket;
     Socket socket;
+    private int connections = 0;
+    JTextArea textArea;
 
     public Server()
     {
@@ -25,26 +27,53 @@ public class Server {
 
     public void start()
     {
-        /*try {
-            serverSocket = new ServerSocket(port);
-            socket = serverSocket.accept();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         initializeGUI();
 
     }
 
+    public void acceptConnections()
+    {
+        while(true)
+        {
+            try {
+                Socket player1 = serverSocket.accept();
+                System.out.println("Player 1 connected");
+
+
+
+                Socket player2 = serverSocket.accept();
+                System.out.println("Player 2 connected");
+
+                new Thread(new ThreadClass(player1, player2)).start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
     public void initializeGUI()
     {
-        JFrame frame =  new JFrame();
-        JTextArea textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(600,400));
-        frame.add(textArea);
+        JFrame frame =  new JFrame("Memory Server");
 
-        frame.setContentPane(frame);
+
+
+        textArea = new JTextArea();
+        JPanel panel = new JPanel();
+
+
+        textArea.setPreferredSize(new Dimension(600,400));
+        frame.setSize(new Dimension(600,400));
+
+        textArea.setEditable(false);
+
+        panel.add(textArea);
+        frame.add(panel);
+
+        frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
