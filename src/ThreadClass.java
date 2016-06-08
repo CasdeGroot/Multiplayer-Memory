@@ -1,45 +1,36 @@
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Joshua on 8-6-2016.
  */
 public class ThreadClass implements Runnable
 {
-    private Socket player1;
-    private Socket player2;
-
+    private Socket player;
     // create and initialize board here
 
-    private DataInputStream fromPlayer1;
-    private DataOutputStream toPlayer1;
-    private DataInputStream fromPlayer2;
-    private DataOutputStream toPlayer2;
+    private DataInputStream fromPlayer;
+    private DataOutputStream toPlayer;
+    private Card[][] cards;
 
-    public ThreadClass(Socket player1,Socket player2)
+    public ThreadClass(Socket player, Card[][] cards)
     {
-        this.player1 = player1;
-        this.player2 = player2;
-
-        //initialize cards
-
+        this.player = player;
+        this.cards = cards;
     }
 
     public void run()
     {
         try
         {
-                DataInputStream fromplayer1 = new DataInputStream(player1.getInputStream());
-                DataOutputStream toPlayer1 = new DataOutputStream(player1.getOutputStream());
-                DataInputStream fromplayer2 = new DataInputStream(player2.getInputStream());
-                DataOutputStream toPlayer2 = new DataOutputStream(player2.getOutputStream());
-
+            ObjectInputStream fromplayer = new ObjectInputStream(player.getInputStream());
+            ObjectOutputStream toPlayer = new ObjectOutputStream(player.getOutputStream());
 
             // notify player 1 its his turn
-            toPlayer1.writeBoolean(true);
+            toPlayer.writeObject(cards);
 
             while(true)
             {

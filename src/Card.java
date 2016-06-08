@@ -14,20 +14,49 @@ public class Card implements Comparable<Card>
         private int height;
         BufferedImage back;
         BufferedImage front;
-        CardImage state;
+        int state;
         boolean isFlipped;
+        String url;
 
-        public Card(int x, int y, int width, int height, String url, CardImage state)
+        public Card(int x, int y, int width, int height, int state)
         {
                 this.x = x;
                 this.y = y;
                 this.width = width;
                 this.height = height;
+                this.state = state;
                 isFlipped = false;
+
+                switch(state)
+                {
+                    case 1:
+                        url = "pepe.jpg";
+                        break;
+                    case 2:
+                        url = "Pepe2.png";
+                        break;
+                    case 3:
+                        url = "Pepe3.png";
+                        break;
+                    case 4:
+                        url = "Pepe4.png";
+                        break;
+                    case 5:
+                        url = "Pepe5.png";
+                        break;
+                    case 6:
+                        url = "Pepe6.png";
+                        break;
+                    case 7:
+                        url = "Pepe7.png";
+                    case 8:
+                        url = "Pepe8.png";
+                        break;
+                }
 
                 try
                 {
-                        back = ImageIO.read(new File(url));
+                        back = ImageIO.read(new File("res//"+ url));
                         front = ImageIO.read(new File("res//front.png"));
                 }
                 catch(Exception e)
@@ -55,7 +84,7 @@ public class Card implements Comparable<Card>
                 }
         }
 
-        public CardImage getImage()
+        public int getImage()
         {
                 return state;
         }
