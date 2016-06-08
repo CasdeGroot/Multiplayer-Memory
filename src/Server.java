@@ -15,7 +15,7 @@ import java.util.Collections;
  */
 public class Server {
 
-    int port = 6667;
+    int port = 6666;
     DataInputStream in;
     DataOutput out;
     ServerSocket serverSocket;
@@ -37,6 +37,13 @@ public class Server {
         Integer[] intArray = {1, 1,2,2,3,3,4,4,5,5,6,6,7,7,8,8};
         states = new ArrayList<Integer>(Arrays.asList(intArray));
         Collections.shuffle(states);
+        try {
+            serverSocket = new ServerSocket(port);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
         addCard(1,0,0, 0);
         initializeGUI();
 

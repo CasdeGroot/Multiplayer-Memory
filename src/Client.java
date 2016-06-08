@@ -15,7 +15,7 @@ public class Client extends JPanel
 {
     private Card card;
 
-    private final int port = 6667;
+    private final int port = 6666;
     String host = "localhost";
     ObjectInputStream in;
     ObjectOutputStream out;
